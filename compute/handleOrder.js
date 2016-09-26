@@ -15,9 +15,9 @@ function handleOrder(order){
     startOrder(order)
     handleSteps(order, null, (error)=>{
         if(error){
-            endOrder(order.uuid,true)
+            endOrder(order.uuid, true);
         }else{
-            endOrder(order.uuid, false)
+            endOrder(order.uuid, false);
         }
     })
 }

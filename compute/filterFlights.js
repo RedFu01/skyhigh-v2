@@ -1,3 +1,4 @@
+"use strict";
 let utils = require('../utils/utils');
 let mongojs = require('mongojs');
 let Terraformer = require('terraformer');
@@ -17,7 +18,7 @@ function filterFlights(uuid, currentStep, lastStepData, callback){
         minDuration,                    // in seconds
         maxDuration,                    // in seconds
         minDistance,                    // in meters
-        maxDistande,                    // in meters
+        maxDistance,                    // in meters
         overallMinHeading,  
         overallMaxHeading,
         } = currentStep.filters;
@@ -27,31 +28,29 @@ function filterFlights(uuid, currentStep, lastStepData, callback){
         let finishedCollections = 0;
         let finishedFlights = 0;
 
-        console.log(geometry)
         for(let i=0; i< collectionNames.length; i++){
             db.collection(collectionNames[i]).find({
-                depatureTime:{'$lt': endTime},
-                arrivalTime:{'$gt': startTime},
-				// cover:{
-				// 	$geoIntersects:{
-				// 		$geometry:geometry
-				// 	}
-                // }
+				depatureTime:
+                   {$lt: endTime },
+				arrivalTime:
+					{$gt: startTime},
+				cover:{
+					$geoIntersects:{
+						$geometry:geometry
+					}
+                }
             }, (error, results)=>{
-                console.log(error)
-                tmpFlights.concat(results);
-                console.log(tmpFlights.length)
+                tmpFlights = tmpFlights.concat(results);
                 finishedCollections++;
                 if(finishedCollections == collectionNames.length){
-                    console.log('DONE')
                     for(let k =0; k< tmpFlights.length; k++){
-                        utils.getFullFlight(collectionNames[i], tmpFlights[k]._id, (flights)=>{
+                        utils.getFullFlight(collectionNames[i], (tmpFlights[k])._id, (flight)=>{
                             flights.push(flight)
                             finishedFlights ++;
                             if(finishedFlights == tmpFlights.length){
                                 flights = flights.filter((flight)=>{
                                     let distance = utils.getFlightDistance(flight);
-                                    let duration = utils.getFlightDistance(flights)
+                                    let duration = utils.getFlightDuration(flight)
                                     if(minDistance && distance < minDistance){
                                         return false;
                                     }
@@ -67,15 +66,21 @@ function filterFlights(uuid, currentStep, lastStepData, callback){
 
                                     return true;
                                 })
-                                let bulk = db.collection(outputCollection).initializeOrderedBulkOp()
-                                
+                                //let bulk = db.collection(outputCollection).initializeOrderedBulkOp()
+                                let flightsFinishedCount =0;
                                 for(let j = 0; j <flights.length; j++){
-                                    bulk.insert(flights[j]);
+                                    //bulk.insert(flights[j]);
+                                    db.collection(outputCollection).insert(flights[j],()=>{
+                                        flightsFinishedCount++;
+                                        if(flightsFinishedCount == flights.length){
+                                            callback(false,{outputCollection});
+                                        }
+                                    });
                                 }
 
-                                bulk.execute((err, res) =>  {
-                                    callback(false,{outputCollection});
-                                })
+                                // bulk.execute((err, res) =>  {
+                                //     callback(false,{outputCollection});
+                                // })
                             }
                         })
                     }

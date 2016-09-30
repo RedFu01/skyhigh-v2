@@ -1,5 +1,10 @@
+"use strict";
 let moment = require('moment');
 let Terraformer = require('terraformer')
+var mongojs = require('mongojs');
+let db = mongojs('skyhigh');
+let uuid = require('node-uuid');
+let ObjectId = db.ObjectId;
 
 function getCollectionArray(startTime, endTime){
     let results = [];
@@ -16,6 +21,17 @@ function getCollectionArray(startTime, endTime){
 function bounds2GeoJSON(minLat, maxLat, minLng, maxLng){
 	var multipoint = new Terraformer.MultiPoint([ [minLng,minLat],[maxLng,maxLat],[minLng,maxLat],[maxLng,minLat] ]);
 	return multipoint.convexHull();
+}
+
+function addLeadingZero(num){
+    return (num<10)?'0'+num:num;
+}
+
+function date2collection(date){
+    var collection = 'flights-'+date.getFullYear();
+    collection += '-'+addLeadingZero(date.getMonth());
+    collection += '-'+addLeadingZero(date.getDate());
+    return collection;    
 }
 
 function getFlightDuration(flight){
@@ -46,6 +62,24 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
 		
 function deg2rad(deg) {
 	return deg * (Math.PI/180);
+}
+
+function computeCover(path){
+	//return ['yey'];
+	var minLat = path[0].pos.coordinates[0],
+		maxLat = path[0].pos.coordinates[0],
+		minLng = path[0].pos.coordinates[1],
+		maxLng = path[0].pos.coordinates[1];
+		 
+	for(var i=1;i<path.length;i++){
+		minLat = Math.min(minLat,path[i].pos.coordinates[0]);
+		maxLat = Math.max(maxLat,path[i].pos.coordinates[0]);
+		minLng = Math.min(minLng,path[i].pos.coordinates[1]);
+		maxLng = Math.max(maxLng,path[i].pos.coordinates[1]);
+	}
+	var multipoint = new Terraformer.MultiPoint([ [minLng,minLat],[maxLng,maxLat],[minLng,maxLat],[maxLng,minLat] ]);
+	//console.log(multipoint.convexHull());
+	return multipoint.convexHull();
 }
 
 function getNeighbourCollections(collection){
@@ -96,10 +130,54 @@ function getFullFlight(collection, id, callback){
     
     
 }
+function getPositionAtMoment(flight, moment){
+    var pos = null;
+    var index =0;
+    if(flight.depatureTime > moment || flight.arrivalTime < moment){
+        return null;
+    }
+    
+    while(moment > parseInt(flight.path[index].timestamp)){
+        index++;
+    }
+    if(!flight.path[index] || !flight.path[index-1]){
+        return null;
+    }
+    var prevPos = {
+        lat:flight.path[index-1].pos.coordinates[0],
+        lng:flight.path[index-1].pos.coordinates[1],
+        ts:parseInt(flight.path[index-1].timestamp)
+    }
+    var nextPos = {
+        lat:flight.path[index].pos.coordinates[0],
+        lng:flight.path[index].pos.coordinates[1],
+        ts:parseInt(flight.path[index].timestamp)
+    }
+    pos = {
+        lat:prevPos.lat + (nextPos.lat-prevPos.lat)*(nextPos.ts-moment)/(nextPos.ts-prevPos.ts),
+        lng:prevPos.lng + (nextPos.lng-prevPos.lng)*(nextPos.ts-moment)/(nextPos.ts-prevPos.ts),
+        ts:moment
+    }
+	return pos; 
+}
+
+function getTimeArray(startTime,endTime,deltaT){
+    var tArray = [];
+    var cTime = startTime;
+    while(cTime < endTime){
+        tArray.push(cTime);
+        cTime += deltaT;
+    }
+    return tArray;
+}
 
 module.exports = {
     getCollectionArray,
     bounds2GeoJSON,
     getFlightDuration,
+    getFlightDistance,
     getFullFlight,
+    getTimeArray,
+    getPositionAtMoment,
+    getDistanceFromLatLonInKm
 }

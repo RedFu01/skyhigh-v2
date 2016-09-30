@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node --use_strict --harmony --max-old-space-size=30000 ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -11,6 +11,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.4",
     "jade": "~1.11.0",
+    "jsnetworkx": "^0.3.4",
     "moment": "^2.15.1",
     "mongojs": "^2.4.0",
     "morgan": "~1.7.0",

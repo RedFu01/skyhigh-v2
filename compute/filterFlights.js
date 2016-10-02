@@ -2,7 +2,7 @@
 let utils = require('../utils/utils');
 let mongojs = require('mongojs');
 let Terraformer = require('terraformer');
-let db = mongojs('skyhigh');
+let db = mongojs('skyhigh', [], {connectTimeoutMS: 1000*60*20, socketTimeoutMS: 1000*60*20})
 let uuid = require('node-uuid');
 let ObjectId = db.ObjectId;
 
@@ -39,13 +39,21 @@ function filterFlights(uuid, currentStep, lastStepData, callback){
 						$geometry:geometry
 					}
                 }
-            }, (error, results)=>{
-                tmpFlights = tmpFlights.concat(results);
+            },{_id: true}, (error, results)=>{
                 finishedCollections++;
+                if(error){
+                    console.log(error)
+                    return;
+                }
+                tmpFlights = tmpFlights.concat(results);
+                console.log('Found '+ results.length);
                 if(finishedCollections == collectionNames.length){
+                    console.log(tmpFlights.length)
                     for(let k =0; k< tmpFlights.length; k++){
                         utils.getFullFlight(collectionNames[i], (tmpFlights[k])._id, (flight)=>{
-                            flights.push(flight)
+                            if(flight){
+                                flights.push(flight)
+                            }
                             finishedFlights ++;
                             if(finishedFlights == tmpFlights.length){
                                 flights = flights.filter((flight)=>{

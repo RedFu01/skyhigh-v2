@@ -7,9 +7,11 @@ var filterFlights = require('./filterFlights');
 var useFilteredFlights = require('./useFilteredFlights');
 var computeNetwork = require('./computeNetwork');
 var computePathes = require('./computePathes');
+var computeNetworkStats = require('./computeNetworkStats');
+var usePathes = require('./usePathes');
 
 function handleOrder(order){
-    order.uuid = 'dev';//node_uuid.v4();
+    order.uuid = 't_'+node_uuid.v4();
     order.ts = new Date();
     order.currentStepIndex = 0;
     order.finished = false;
@@ -52,8 +54,15 @@ function handleSteps(order, data, callback){
         case 'COMPUTE_NETWORK':
             computeNetwork(order.uuid, currentStep, data, stepCallback);
             break;
+        case 'USE_PATHES':
+            usePathes(order.uuid, currentStep, data, stepCallback);
+            break;
         case 'COMPUTE_PATHES':
             computePathes(order.uuid, currentStep, data, stepCallback);
+            break;
+        case 'COMPUTE_NETWORK_STATS':
+            currentStep.flightCollection = 'filtered_flights_'+order.uuid;
+            computeNetworkStats(order.uuid, currentStep, data, stepCallback);
             break;
         default:
             callback(true);

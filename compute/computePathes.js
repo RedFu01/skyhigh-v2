@@ -44,7 +44,7 @@ function computePathes(uuid, currentStep, lastStepData, callback){
             db.collection(outputCollection).insert({_id: timestamp, pathes}, (err)=>{
                 finishedTimestamps++;
                 if(finishedTimestamps == networks.length){
-                    callback(false)
+                    callback(false,{outputCollection});
                 }
             })
             prevPathes = pathes;

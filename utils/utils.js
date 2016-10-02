@@ -104,6 +104,10 @@ function getFullFlight(collection, id, callback){
     var collectionArray = getNeighbourCollections(collection);
     
     db.collection(collection).find({_id:ObjectId(id)},function(error,firstResult){
+        if(!firstResult || firstResult.length ==0){
+            callback(null);
+            return;
+        }
         db.collection(collectionArray[0]).find({key:firstResult[0].key},function(error,res1){
             db.collection(collectionArray[2]).find({key:firstResult[0].key},function(error,res3){
                 if(res1[0]){

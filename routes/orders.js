@@ -6,6 +6,34 @@ var handleOrder = require('../compute/handleOrder')
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 
+    // handleOrder({
+    //     steps:[{
+    //         type: 'USE_PATHES',
+    //         collectionName: 'pathes-dev'
+    //     },{
+    //         type:'COMPUTE_NETWORK_STATS',
+    //         flightCollection:'filtered_flights_dev',
+    //         startTime: 1401580800,
+    //         endTime: 1401580800 + 60*60*24,
+    //         deltaT: 100,
+    //         IGWs:[{
+    //                 name:"Shannon Airport",
+    //                 key:"IGW_EUROPE_00",
+    //                 position: {
+    //                     lat: 52.6996573,
+    //                     lng: -8.9168798
+    //                 }
+    //             },{
+    //                 name:"Gander Airport",
+    //                 key:"IGW_AMERICA_00",
+    //                 position: {
+    //                     lat: 48.9418259,
+    //                     lng: -54.5681016
+    //                 }
+    //             }]
+    //     }]
+    // })
+
     handleOrder({
         steps:[{
             type:'FILTER_FLIGHTS',
@@ -16,15 +44,15 @@ router.get('/', function(req, res, next) {
                     minLng: -55,
                     maxLng: -8
                 },
-                startTime: 1401577187 - 60*60*4,
-                endTime: 1401577187 + 60*60*4,
+                startTime: 1401580800,
+                endTime: 1401580800 + 60*60*24,
                 minDuration: 60*60*2,
             }
         },{
             type:'COMPUTE_NETWORK',
             properties:{
-                startTime: 1401577187 - 60*60*4,
-                endTime: 1401577187 + 60*60*4,
+                startTime: 1401580800,
+                endTime: 1401580800 + 60*60*24,
                 deltaT: 100,
                 A2G_Radius: 416.7, // 225nmi
                 A2A_Radius: 2 * 416.7, //450nmi
@@ -46,6 +74,24 @@ router.get('/', function(req, res, next) {
             }
         },{
             type:'COMPUTE_PATHES',
+            IGWs:[{
+                    name:"Shannon Airport",
+                    key:"IGW_EUROPE_00",
+                    position: {
+                        lat: 52.6996573,
+                        lng: -8.9168798
+                    }
+                },{
+                    name:"Gander Airport",
+                    key:"IGW_AMERICA_00",
+                    position: {
+                        lat: 48.9418259,
+                        lng: -54.5681016
+                    }
+                }]
+        },{
+            type:'COMPUTE_NETWORK_STATS',
+            deltaT: 100,
             IGWs:[{
                     name:"Shannon Airport",
                     key:"IGW_EUROPE_00",

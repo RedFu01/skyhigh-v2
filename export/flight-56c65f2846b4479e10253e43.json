@@ -1,0 +1,1 @@
+{"flightId":"56c65f2846b4479e10253e43","flightDuration":8610,"timeConnected":{"IGW_EUROPE_00":600,"IGW_AMERICA_00":0},"pathes":{"f1d3ff8443297732862df21dc4e57262":{"hash":"f1d3ff8443297732862df21dc4e57262","connection":["56c65f2846b4479e10253e43","56c65b4f46b4479e1024fc5f","56c65b5846b4479e1024fcf9","IGW_EUROPE_00"],"duration":600,"hops":4}}}

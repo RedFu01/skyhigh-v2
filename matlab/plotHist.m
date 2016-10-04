@@ -7,7 +7,6 @@ raw = fread(fid,inf);
 str = char(raw');
 fclose(fid);
 
-
 data = JSON.parse(str);
 for i=1:1:length(data)
    hops(i) = data{i}.hops;

@@ -10,10 +10,13 @@ let fs = require('fs')
 let mkdirp = require('mkdirp');
 
 let pathes = [];
+let connectionDurations = []
 
-
-db.collection("network-stats-t_d1d52ede-1181-4c43-b56e-02b70434a58e").find({},(error,results)=>{
+db.collection("network-stats-t_b2b33807-26b9-4bc4-8a80-953e40daa490").find({},(error,results)=>{
     for(let i=0; i< results.length; i++){
+        connectionDurations.push({
+            flightDuration: results[i]
+        })
         for(hash in results[i].pathes){
             pathes.push({
                 hops: results[i].pathes[hash].hops,

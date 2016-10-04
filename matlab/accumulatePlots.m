@@ -1,6 +1,6 @@
 clear;
 close all;
-for j=50:50:450
+for j=50:50:500
     clear duration hops duration_high duration_low
     conRadius = num2str(j);
     leg{j/50} = [strcat(conRadius,' nmi')];

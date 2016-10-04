@@ -12,7 +12,7 @@ let mkdirp = require('mkdirp');
 let pathes = [];
 let connectionDurations = []
 
-db.collection("network-stats-t_8d3537c9-f9d2-4621-ba14-c365848a4297").find({},(error,results)=>{
+db.collection("network-stats-t_7387097f-4b7c-4c3e-b4a5-6fad3c7b4d14").find({},(error,results)=>{
     for(let i=0; i< results.length; i++){
         connectionDurations.push({
             flightDuration: results[i]
@@ -24,7 +24,7 @@ db.collection("network-stats-t_8d3537c9-f9d2-4621-ba14-c365848a4297").find({},(e
             })
         }
     }
-    fs.writeFile('./export/pathes_400nmi.json' , JSON.stringify(pathes), function (err) {
+    fs.writeFile('./export/pathes_500nmi.json' , JSON.stringify(pathes), function (err) {
         if(err)
         console.log(err)
         console.log('Passout')

@@ -12,7 +12,7 @@ let mkdirp = require('mkdirp');
 let pathes = [];
 let connectionDurations = []
 
-db.collection("network-stats-t_b2b33807-26b9-4bc4-8a80-953e40daa490").find({},(error,results)=>{
+db.collection("network-stats-t_2e5af274-d7a5-4f32-8e59-c2d0125a17cb").find({},(error,results)=>{
     for(let i=0; i< results.length; i++){
         connectionDurations.push({
             flightDuration: results[i]

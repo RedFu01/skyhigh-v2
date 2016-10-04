@@ -54,8 +54,8 @@ router.get('/', function(req, res, next) {
                 startTime: 1401580800,
                 endTime: 1401580800 + 60*60*24,
                 deltaT: 100,
-                A2G_Radius: 92.6*2, // 100nmi
-                A2A_Radius: 92.6*4, // 200nmi
+                A2G_Radius: 92.6*5/2, // 125nmi
+                A2A_Radius: 92.6*5, // 250nmi
                 IGWs:[{
                     name:"Shannon Airport",
                     key:"IGW_EUROPE_00",

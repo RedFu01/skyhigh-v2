@@ -1,6 +1,6 @@
 close all;
 clear;
-conRadius = '300';
+conRadius = '350';
 fname = strcat('resources/pathes_',conRadius,'nmi.json');
 fid = fopen(fname);
 raw = fread(fid,inf);

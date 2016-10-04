@@ -1,6 +1,9 @@
-for j=450:50:500
+clear;
+close all;
+for j=50:50:450
     clear duration hops duration_high duration_low
     conRadius = num2str(j);
+    leg{j/50} = [strcat(conRadius,' nmi')];
     fname = strcat('resources/pathes_',conRadius,'nmi.json');
     fid = fopen(fname);
     raw = fread(fid,inf);
@@ -23,6 +26,12 @@ for j=450:50:500
         end
 
     end
+    histogram(duration,200:200:8000);
+    title('Path durations over different radio ranges');
+    xlabel('Path duration [s]')
+    ylabel('Occurrence')
+    legend(leg)
+    hold on;
 
     duration_high(duration_high==0) = [];
     duration_low(duration_low==0) = [];

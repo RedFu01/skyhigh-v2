@@ -1,6 +1,6 @@
 close all;
 clear;
-conRadius = '450';
+conRadius = '100';
 fname = strcat('resources/pathes_',conRadius,'nmi.json');
 fid = fopen(fname);
 raw = fread(fid,inf);
@@ -28,21 +28,21 @@ duration_high(duration_high==0) = [];
 duration_low(duration_low==0) = [];
 
 figure;
-hist(duration,100)
+hist(duration,50)
 title(strcat('Path duration | ',conRadius));
 xlabel('Path duration [s]')
 ylabel('Occurrence')
 savefig(strcat('figures/pathDuration', conRadius));
 
 figure;
-hist(duration_high,100)
+hist(duration_high,50)
 title(strcat('Path duration for pathes > ',num2str(mean(hops)), ' hops | ', conRadius ));
 xlabel('Path duration [s]')
 ylabel('Occurrence')
 savefig(strcat('figures/pathDuration_high', conRadius));
 
 figure;
-hist(duration_low,100)
+hist(duration_low,50)
 title(strcat('Path duration for pathes < ',num2str(mean(hops)), ' hops | ', conRadius ));
 xlabel('Path duration [s]')
 ylabel('Occurrence')

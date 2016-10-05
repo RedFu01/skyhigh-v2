@@ -26,7 +26,7 @@ for j=50:50:500
         end
 
     end
-    histogram(duration,200:200:8000);
+    histogram(duration,0:200:8000);
     title('Path durations over different radio ranges');
     xlabel('Path duration [s]')
     ylabel('Occurrence')

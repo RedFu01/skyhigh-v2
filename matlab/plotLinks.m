@@ -1,6 +1,6 @@
 close all;
 clear;
-conRadius = '500';
+conRadius = '100';
 fname = strcat('resources/links_',conRadius,'nmi.json');
 fid = fopen(fname);
 raw = fread(fid,inf);

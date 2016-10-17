@@ -14,7 +14,7 @@ let links = {};
 let c =0;
 let deltaT = 100;
 
-db.collection("network-t_7387097f-4b7c-4c3e-b4a5-6fad3c7b4d14").find((err, res) => {
+db.collection("network-t_b2b33807-26b9-4bc4-8a80-953e40daa490").find((err, res) => {
     for(let i=1; i< res.length; i++){
         for(let ac in res[i].aircraft){
             for(let j=0; j< res[i].aircraft[ac].length; j++){
@@ -38,7 +38,7 @@ db.collection("network-t_7387097f-4b7c-4c3e-b4a5-6fad3c7b4d14").find((err, res) 
     for(let key in links){
         linkArray.push(links[key])
     }
-    fs.writeFile('./export/links_500nmi.json' , JSON.stringify(linkArray), function (err) {
+    fs.writeFile('./export/links_50nmi.json' , JSON.stringify(linkArray), function (err) {
         if(err)
         console.log(err)
         console.log('Passout')

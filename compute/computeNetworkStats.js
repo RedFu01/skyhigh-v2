@@ -20,8 +20,12 @@ function computeNetworkStats(uuid, currentStep, lastStepData, callback){
                 timeconnected[currentStep.IGWs[j].key] = 0;
             }
             stats[flights[i]._id]={
+                startTime: parseInt(flights[i].path[0].timestamp),
+                endTime: parseInt(flights[i].path[flights[i].path.length-1].timestamp),
                 flightId:flights[i]._id,
                 flightDuration: duration,
+                fullTimeConnected: 0,
+                connectionTimeSeries: {},
                 timeConnected: timeconnected,
                 pathes:{}
             }
@@ -29,8 +33,18 @@ function computeNetworkStats(uuid, currentStep, lastStepData, callback){
         db.collection(lastStepData.outputCollection).find({}, (error, results)=>{
             for(let i=0; i< results.length; i++){ //loop through all the timestamps
                 for(let ac_id in results[i].pathes){
+
+                    let connectedNow = false;
                     for(let igw in results[i].pathes[ac_id]){
                         stats[ac_id].timeConnected[igw]+=currentStep.deltaT;
+
+                        if(stats[ac_id].connectionTimeSeries[results[i]._id]){
+                            stats[ac_id].connectionTimeSeries[results[i]._id].push(igw)
+                        }else{
+                            stats[ac_id].connectionTimeSeries[results[i]._id] = [igw]
+                        }
+                        
+                        let connectedNow = true;
                         let pathHash = hash(results[i].pathes[ac_id][igw])
                         if(!stats[ac_id].pathes[pathHash]){
                             stats[ac_id].pathes[pathHash] = {
@@ -42,6 +56,9 @@ function computeNetworkStats(uuid, currentStep, lastStepData, callback){
                         }else{
                             stats[ac_id].pathes[pathHash].duration += currentStep.deltaT;
                         }
+                    }
+                    if(connectedNow){
+                        stats[ac_id].fullTimeConnected+=currentStep.deltaT;
                     }
                 }
             }

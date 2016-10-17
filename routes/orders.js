@@ -35,6 +35,7 @@ router.get('/', function(req, res, next) {
     // })
 
     handleOrder({
+        radius:'500nmi',
         steps:[{
             type:'FILTER_FLIGHTS',
             filters:{

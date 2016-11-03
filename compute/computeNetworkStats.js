@@ -34,7 +34,7 @@ function computeNetworkStats(uuid, currentStep, lastStepData, callback){
             for(let i=0; i< results.length; i++){ //loop through all the timestamps
                 for(let ac_id in results[i].pathes){
 
-                    let connectedNow = false;
+                    var connectedNow = false;
                     for(let igw in results[i].pathes[ac_id]){
                         stats[ac_id].timeConnected[igw]+=currentStep.deltaT;
 
@@ -44,7 +44,7 @@ function computeNetworkStats(uuid, currentStep, lastStepData, callback){
                             stats[ac_id].connectionTimeSeries[results[i]._id] = [igw]
                         }
                         
-                        let connectedNow = true;
+                        connectedNow = true;
                         let pathHash = hash(results[i].pathes[ac_id][igw])
                         if(!stats[ac_id].pathes[pathHash]){
                             stats[ac_id].pathes[pathHash] = {

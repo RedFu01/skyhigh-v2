@@ -11,7 +11,7 @@ var computeNetworkStats = require('./computeNetworkStats');
 var usePathes = require('./usePathes');
 
 function handleOrder(order){
-    order.uuid = '17/10/2016_'+ (order.radius || node_uuid.v4());
+    order.uuid = '31/10/2016_'+ (order.radius || node_uuid.v4());
     order.ts = new Date();
     order.currentStepIndex = 0;
     order.finished = false;

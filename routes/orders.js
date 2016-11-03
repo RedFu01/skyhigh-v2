@@ -4,7 +4,7 @@ var router = express.Router();
 var handleOrder = require('../compute/handleOrder')
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
 
     // handleOrder({
     //     steps:[{

@@ -1,0 +1,222 @@
+.user-image {
+  width: 50px;
+  height: 50px;
+  margin: -10px;
+}
+.md-sidenav-left {
+  height: calc(100vh - 64px);
+}
+.md-sidenav-left md-content {
+  height: 100%;
+}
+ui-view {
+  display: block;
+  padding: 0 !important;
+}
+.logo-icon {
+  width: 40px;
+  margin-left: 13px;
+}
+.md-toolbar-tools {
+  background-color: #1E2B39;
+}
+md-whiteframe {
+  background: #fff;
+  padding: 10px;
+  margin: 10px;
+  height: 200px;
+}
+.user-icon {
+  border: 2px solid #FF4FFE;
+  width: 50px !important;
+  height: 50px !important;
+}
+.day-select {
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+}
+.day-select span {
+  display: inline-block;
+  vertical-align: middle;
+  height: 24px;
+}
+.timeline {
+  margin-top: 12px;
+  height: 300px;
+  position: relative;
+}
+.times-of-day {
+  border-top: 1px solid grey;
+  padding-top: 3px;
+}
+.times-of-day .time {
+  font-size: 12px;
+  text-align: center;
+}
+.line {
+  fill: none;
+  stroke-width: 2px;
+}
+.bar:hover {
+  opacity: .8;
+}
+line-chart,
+bar-chart,
+.events {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.icon {
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+}
+.icon md-icon {
+  color: #149F9E;
+}
+.icon:hover md-icon {
+  color: #E0E0E0;
+}
+.insights {
+  height: calc(100vh - 80px);
+  overflow-y: scroll;
+}
+.insights md-whiteframe {
+  cursor: pointer;
+}
+.insights .title {
+  font-size: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+.insights md-icon {
+  font-size: 35px;
+  height: 35px;
+  width: 35px;
+}
+.insights .warning {
+  color: #D21505;
+}
+.insights .content {
+  padding-top: 10px;
+}
+.insights .content img {
+  background-color: grey;
+  width: 90px;
+  height: 90px;
+  border: none;
+  margin-right: 10px;
+}
+.insights .content .description {
+  font-size: 15px;
+}
+.insights .content p {
+  margin: 0;
+}
+.medical-history {
+  height: calc(100vh - 80px);
+  overflow-y: scroll;
+}
+.medical-history .filters {
+  padding: 15px;
+}
+.medical-history .filters md-radio-button {
+  margin-right: 30px;
+}
+.medical-history .left {
+  border-right: 4px #0C5F5F solid;
+  margin-right: -4px;
+  transition: border-color 0.3s;
+}
+.medical-history .left.red {
+  border-color: #D21505;
+}
+.medical-history .left.yellow {
+  border-color: #EBC812;
+}
+.medical-history .event-timeline {
+  position: relative;
+}
+.medical-history .bubble {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -7px;
+  border: 2px solid white;
+  margin-top: -8px;
+  border-radius: 16px;
+  background-color: #0C5F5F;
+  transition: background-color 0.3s;
+}
+.medical-history .bubble.red {
+  background-color: #D21505;
+}
+.medical-history .bubble.yellow {
+  background-color: #EBC812;
+}
+.medical-history .entry {
+  color: white;
+  background-color: #149F9E;
+  padding: 15px;
+  position: relative;
+  margin: 10px;
+  transition: background-color 0.3s;
+}
+.medical-history .entry.red {
+  background-color: #D21505;
+}
+.medical-history .entry.red:before {
+  border-left-color: #D21505;
+}
+.medical-history .entry.yellow {
+  background-color: #EBC812;
+}
+.medical-history .entry.yellow:before {
+  border-left-color: #EBC812;
+}
+.medical-history .entry:before {
+  right: -14px;
+  top: 8px;
+  position: absolute;
+  width: 0;
+  height: 0;
+  content: '';
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 20px solid #149F9E;
+  transition: border-color 0.3s;
+}
+.medical-history .left .entry {
+  margin-top: 20px;
+  margin-right: 20px;
+}
+.medical-history .right .entry {
+  margin-left: 20px;
+  margin-top: 60px;
+}
+.medical-history .right .entry.red:before {
+  border-right-color: #D21505;
+}
+.medical-history .right .entry.yellow:before {
+  border-right-color: #EBC812;
+}
+.medical-history .right .entry:before {
+  left: -14px;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 0px solid transparent;
+  border-right: 20px solid #149F9E;
+}
+.medical-history .btn-add {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+}

@@ -1,0 +1,35 @@
+    <md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <md-icon flex="5" md-font-library="material-icons">flight_takeoff</md-icon>
+        <h2 flex>
+          <span>Skyhigh</span>
+        </h2>
+      </div>
+    </md-toolbar>
+<section layout="row" flex>
+    <md-sidenav
+        class="md-sidenav-left"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-md')"
+        md-whiteframe="4">
+      <md-content layout-padding>
+        <md-list>
+            <md-list-item ng-click="goTo('main.dashboard')">
+                  <md-icon md-font-library="material-icons">dashboard</md-icon>
+                <p>Dashboard</p>
+            </md-list-item>
+            <md-list-item ng-click="goTo('main.explore')">
+                  <md-icon md-font-library="material-icons">search</md-icon>
+                <p>Explore</p>
+            </md-list-item>
+            <md-list-item ng-click="goTo('main.compute')">
+                  <md-icon md-font-library="material-icons">memory</md-icon>
+                <p>Compute</p>
+            </md-list-item>
+        </md-list>
+      </md-content>
+    </md-sidenav>
+    <md-content flex layout-padding>
+        <ui-view flex></ui-view>
+    </md-content>
+</section>

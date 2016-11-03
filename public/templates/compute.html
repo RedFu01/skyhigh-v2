@@ -1,0 +1,66 @@
+<section class="compute">
+<p>Select here the steps to execute a computation:</p>
+<md-divider/>
+
+<div layout="column">
+    <md-content layout="column">
+    <h4>Basic configuration:</h4>
+        <div layout="row">
+            <md-input-container flex="40" class="md-block">
+                <label>Name</label>
+                <input ng-model="order.name">
+            </md-input-container>
+            <md-input-container flex="40" class="md-block">
+                <label>A2A Radio range (in km)</label>
+                <input type="number" ng-model="order.radioRange">
+            </md-input-container>
+        </div>
+        <div layout="row">
+            <md-input-container flex="40" class="md-block">
+                <label>Start time (Unix timestamp)</label>
+                <input type="number" ng-model="order.startTime">
+            </md-input-container>
+            <md-input-container flex="40" class="md-block">
+                <label>End time (Unix timestamp)</label>
+                <input type="number" ng-model="order.endTime">
+            </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="40" class="md-block">
+            <label>IGWs</label>
+            <md-select ng-model="order.IGWs" multiple>
+            <md-optgroup label="IGWs">
+                <md-option ng-value="IGW.name" ng-repeat="IGW in IGWs">{{IGW.name}}</md-option>
+            </md-optgroup>
+        </md-input-container>
+        <md-input-container flex="40" class="md-block">
+            <label>DeltaT (in s)</label>
+            <input type="number" ng-model="order.deltaT">
+        </md-input-container>
+    </div>
+    </md-content>
+    <md-divider/>
+    <md-content layout="column">
+    <h4>Steps:</h4>
+    <div ng-repeat="step in order.steps" style="margin: 15px; padding: 10px;" class="md-whiteframe-1dp">
+        <md-input-container flex class="md-block">
+            <label>Type</label>
+            <md-select ng-model="step.type">
+                <md-option ng-value="type" ng-repeat="type in stepTypes">{{type}}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <filter-flights step="step" ng-if="step.type == 'FILTER_FLIGHTS'"></filter-flights>
+        <compute-pathes step="step" ng-if="step.type == 'COMPUTE_PATHES'"></compute-pathes>
+        <compute-network step="step" ng-if="step.type == 'COMPUTE_NETWORK'"></compute-network>
+    </div>
+    <md-button class="md-primary" ng-click="addStep()">Add Step</md-button>
+
+    </md-content>
+    <md-divider/>
+    <md-content flex layout="column">
+        <md-button class="md-primary" flex ng-click="compute()">Compute</md-button>
+    </md-content>
+
+</div>
+</section>

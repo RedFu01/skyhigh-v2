@@ -47,7 +47,6 @@ function computeNetwork(uuid, currentStep, lastStepData, callback){
                 for(let k = 0; k< IGWs.length; k++){
                     if(f1_pos && utils.getDistanceFromLatLonInKm(f1_pos.lat, f1_pos.lng, IGWs[k].position.lat, IGWs[k].position.lng) < A2G_Radius){
                         neighbours.push(IGWs[k].key);
-                        console.log(IGWs[k].key)
                     }
                 }
                 if(neighbours.length >0)

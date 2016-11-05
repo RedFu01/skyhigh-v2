@@ -1,5 +1,6 @@
 {
         "radius":"600km",
+        "email": "konradfuger@gmail.com",
         "steps":[{
             "type":"FILTER_FLIGHTS",
             "filters":{

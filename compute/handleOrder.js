@@ -11,7 +11,7 @@ var computeNetworkStats = require('./computeNetworkStats');
 var usePathes = require('./usePathes');
 
 function handleOrder(order, orderEndCallback){
-    order.uuid = '31/10/2016_'+ (order.radius || node_uuid.v4());
+    order.uuid = '05/11/2016_'+ (order.radius || '') + '_' + node_uuid.v4();
     order.ts = new Date();
     order.currentStepIndex = 0;
     order.finished = false;
@@ -22,12 +22,12 @@ function handleOrder(order, orderEndCallback){
         if(error){
             endOrder(order.uuid, true);
             if(orderEndCallback){
-                orderEndCallback()
+                orderEndCallback(error)
             }
         }else{
             endOrder(order.uuid, false);
             if(orderEndCallback){
-                orderEndCallback()
+                orderEndCallback(error)
             }
         }
     })

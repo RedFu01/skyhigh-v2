@@ -1,0 +1,76 @@
+{
+        "radius":"600km",
+        "steps":[{
+            "type":"FILTER_FLIGHTS",
+            "filters":{
+                "region":{
+                    "minLat": 45,
+                    "maxLat": 55,
+                    "minLng": -55,
+                    "maxLng": -8
+                },
+                "startTime": 1401580800,
+                "endTime": 1401667200,
+                "minDuration": 7200
+            }
+        },{
+            "type":"COMPUTE_NETWORK",
+            "properties":{
+                "startTime": 1401580800,
+                "endTime": 1401667200,
+                "deltaT": 100,
+                "A2G_Radius": 300,
+                "A2A_Radius": 600, 
+                "IGWs":[{
+                    "name":"Shannon Airport",
+                    "key":"IGW_EUROPE_00",
+                    "position": {
+                        "lat": 52.6996573,
+                        "lng": -8.9168798
+                    }
+                },{
+                    "name":"Gander Airport",
+                    "key":"IGW_AMERICA_00",
+                    "position": {
+                        "lat": 48.9418259,
+                        "lng": -54.5681016
+                    }
+                }]
+            }
+        },{
+            "type":"COMPUTE_PATHES",
+            "IGWs":[{
+                    "name":"Shannon Airport",
+                    "key":"IGW_EUROPE_00",
+                    "position": {
+                        "lat": 52.6996573,
+                        "lng": -8.9168798
+                    }
+                },{
+                    "name":"Gander Airport",
+                    "key":"IGW_AMERICA_00",
+                    "position": {
+                        "lat": 48.9418259,
+                        "lng": -54.5681016
+                    }
+                }]
+        },{
+            "type":"COMPUTE_NETWORK_STATS",
+            "deltaT": 100,
+            "IGWs":[{
+                    "name":"Shannon Airport",
+                    "key":"IGW_EUROPE_00",
+                    "position": {
+                        "lat": 52.6996573,
+                        "lng": -8.9168798
+                    }
+                },{
+                    "name":"Gander Airport",
+                    "key":"IGW_AMERICA_00",
+                    "position": {
+                        "lat": 48.9418259,
+                        "lng": -54.5681016
+                    }
+                }]
+        }]
+    }

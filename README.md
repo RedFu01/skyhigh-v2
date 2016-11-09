@@ -164,4 +164,4 @@ The heart piece of the application is the `compute/handleOrder.js` file. It anal
 
 ### Export
 
-In the `export` folder is a variety of scripts which can be used to generate JSON files from an order which can be interpreted further interpreted by matlab scripts in the `matlab` folder. Those export scripts are not configurable by commanline arguments. The needed collection an output files have to be added in code. 
+In the `tools` folder is a variety of scripts which can be used to generate JSON files from an order which can be interpreted further interpreted by matlab scripts in the `matlab` folder. Those export scripts are not configurable by commanline arguments. The needed collection an output files have to be added in code. 

@@ -46,7 +46,7 @@ The `radius` is a string which is not used for computing but to describe the ord
 
 #### Steps
 
-The only thing all steps have in common is the `type`property. It says which script is used to execute this step. There are 6 different types:
+The only thing all steps have in common is the `type` property. It says which script is used to execute this step. There are 6 different types:
 
 * 'FILTER_FLIGHTS'
 * 'USE_FILTERED_FLIGHTS'
@@ -80,8 +80,8 @@ This step is used to filter a subset of all flight data. it takes a rectangular 
 ##### 'USE_FILTERED_FLIGHTS'
 ```
 {
-  type: 'USE_PATHES',
-  collectionName: 'pathes-dev'
+  "type": "USE_FILTERED_FLIGHTS",
+  "collectionName": "pathes-dev"
 }
 ```
 
@@ -110,3 +110,58 @@ If the filter part of the current order was already executed in a previous order
 ```
 
 This steps converts the filtered flights into a network. It describes for every timestep between startTime and endTime for every aircraft which other aircraft or internet gateways (IGWs) are in communication range.
+
+##### 'COMPUTE_PATHES'
+```
+{
+  "type":"COMPUTE_PATHES",
+  "IGWs":[{
+    "name":"Shannon Airport",
+    "key":"IGW_EUROPE_00",
+    "position": {
+      "lat": 52.6996573,
+      "lng": -8.9168798
+     }
+   }, ... ]
+}
+```
+
+In this steps a previous created network is used to calculate the shortest pathes from every aircraft to every IGW for every timestamp. To be more efficient it loops through every timestep and if the shortest path from the last timestep still exists it does not look again for a shortest path.
+
+##### 'USE_PATHES'
+```
+{
+  "type":"USE_PATHES",
+  "collectionName": "pathes-dev"
+}
+```
+
+This one again is a shortcut to pick off a previously executed order and use the pathes calculated there.
+
+##### 'COMPUTE_NETWORK_STATS'
+```
+{
+  "type":"COMPUTE_NETWORK_STATS",
+  "deltaT": 300,
+  "IGWs":[{
+    "name":"Shannon Airport",
+    "key":"IGW_EUROPE_00",
+    "position": {
+      "lat": 52.6996573,
+      "lng": -8.9168798
+     }
+   }, ... ]
+}
+```
+
+In this step the final insights for the computation are created. It takes the computed pathes and analyzes them in regards to the number of hops and the time every path stays active.
+
+
+### Program flow
+
+The heart piece of the application is the `compute/handleOrder.js` file. It analyzes the order and executes the steps in a sequence. The software is designed that every step creates an output collection as well as additional information which is passed to the next step. In this way every computation can be reused or resumed in case of a crash. Also the system stores all orders in a designated collection and marks them as finished when the execution comes to an end. This can be used to investigate old orders or implement a waiting queue for several orders (in the moment all orders are executed in parallel). If an error occurs the execution of the order terminates, the error is stored in the database and a mail is sent which says that the order could not be completet.
+
+
+### Export
+
+In the `export` folder is a variety of scripts which can be used to generate JSON files from an order which can be interpreted further interpreted by matlab scripts in the `matlab` folder. Those export scripts are not configurable by commanline arguments. The needed collection an output files have to be added in code. 

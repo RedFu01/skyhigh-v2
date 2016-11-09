@@ -26,7 +26,7 @@ In commandline mode the entry point for this software is the `tools/executeOrder
 
 #### Server mode
 
-There is also a server mode where you can pass a order with a POST request to `http://baseUrl/orders`.
+There is also a server mode where you can pass a order with a POST request to `http://baseUrl/orders`. For the server mode there is also a visual interface in development to make order creation and monitoring easier.
 
 
 ### Orders
@@ -42,7 +42,7 @@ This is how an example order looks like:
 }
 ```
 
-The `radius` is a string which is not used for computing but to describe the order. When the order is finished a email is sent to the adress specified in `email`. The steps array contains objects. Those steps are executed one after another. Every step creates an new mongoDB collection with its output data. The collection is named according to the type of the step.
+The `radius` is a string which is not used for computing but to describe the order. When the order is finished a email is sent to the adress specified in `email`. The steps array contains objects explained below. Those steps are executed one after another. Every step creates an new mongoDB collection with its output data. The collection is named according to the type of the step.
 
 #### Steps
 
@@ -75,7 +75,7 @@ Each steps takes different additional data to perform its task.
   }
 }
 ```
-This step is used to filter a subset of all flight data. it takes a rectangular region, a startTime and endTime as UNIX timestamps as well as a minDuration in seconds.
+This step is used to filter a subset of all flight data. It takes a rectangular `region`, a `startTime` and `endTime` as UNIX timestamps as well as a `minDuration` in seconds.
 
 ##### 'USE_FILTERED_FLIGHTS'
 ```
@@ -109,7 +109,7 @@ If the filter part of the current order was already executed in a previous order
 }
 ```
 
-This steps converts the filtered flights into a network. It describes for every timestep between startTime and endTime for every aircraft which other aircraft or internet gateways (IGWs) are in communication range.
+This steps converts the filtered flights into a network. It describes for every timestep between `startTime` and `endTime` for every aircraft which other aircraft or internet gateways (`IGWs`) are in communication range.
 
 ##### 'COMPUTE_PATHES'
 ```

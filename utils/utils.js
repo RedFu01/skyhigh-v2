@@ -137,6 +137,10 @@ function getFullFlight(collection, id, callback){
 function getPositionAtMoment(flight, moment){
     var pos = null;
     var index =0;
+    if(!flight){
+        return null;
+    }
+
     if(flight.depatureTime > moment || flight.arrivalTime < moment){
         return null;
     }
@@ -150,16 +154,28 @@ function getPositionAtMoment(flight, moment){
     var prevPos = {
         lat:flight.path[index-1].pos.coordinates[0],
         lng:flight.path[index-1].pos.coordinates[1],
+        altitude : flight.path[index-1].altitude,
+		horizontalSpeed : flight.path[index-1].horizontalSpeed,
+		verticalSpeed: flight.path[index-1].verticalSpeed,
+		track: flight.path[index-1].track,
         ts:parseInt(flight.path[index-1].timestamp)
     }
     var nextPos = {
         lat:flight.path[index].pos.coordinates[0],
         lng:flight.path[index].pos.coordinates[1],
+        altitude : flight.path[index].altitude,
+		horizontalSpeed : flight.path[index].horizontalSpeed,
+		verticalSpeed: flight.path[index].verticalSpeed,
+		track: flight.path[index].track,
         ts:parseInt(flight.path[index].timestamp)
     }
     pos = {
-        lat:prevPos.lat + (nextPos.lat-prevPos.lat)*(nextPos.ts-moment)/(nextPos.ts-prevPos.ts),
-        lng:prevPos.lng + (nextPos.lng-prevPos.lng)*(nextPos.ts-moment)/(nextPos.ts-prevPos.ts),
+        lat: prevPos.lat + (nextPos.lat-prevPos.lat)*(nextPos.ts-moment)/(nextPos.ts-prevPos.ts),
+        lng: prevPos.lng + (nextPos.lng-prevPos.lng)*(nextPos.ts-moment)/(nextPos.ts-prevPos.ts),
+        altitude: prevPos.altitude + (nextPos.altitude-prevPos.altitude)*(nextPos.ts-moment)/(nextPos.ts-prevPos.ts),
+		horizontalSpeed: prevPos.horizontalSpeed + (nextPos.horizontalSpeed-prevPos.horizontalSpeed)*(nextPos.ts-moment)/(nextPos.ts-prevPos.ts),
+		verticalSpeed: prevPos.verticalSpeed + (nextPos.verticalSpeed-prevPos.verticalSpeed)*(nextPos.ts-moment)/(nextPos.ts-prevPos.ts),
+		track: prevPos.track + (nextPos.track-prevPos.track)*(nextPos.ts-moment)/(nextPos.ts-prevPos.ts),
         ts:moment
     }
 	return pos; 

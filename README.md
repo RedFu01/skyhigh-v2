@@ -179,3 +179,5 @@ In several occasions it is necessary to inspect whats in the database:
 
 ```
 
+To use any of the export tools navigate in the `skyhigh` folder and execute a script like `root@orion6:/home/skyhigh-v2# node --use_strict --harmony --max-old-space-size=30000 ./tools/exportLinkDetails.js`, the collection which will be exported needs to be adjusted in the code.
+

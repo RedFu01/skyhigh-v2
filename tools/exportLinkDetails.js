@@ -66,8 +66,17 @@ var finalLinkResults = [];
 function handleLink(link, callback){
     let linkObj = Object.assign({}, link, {startArr:[],endArr:[]});
     db.collection('filtered_flights_'+ collectionUuid).find({_id:link.start}, (err,f1res) =>{
+        if(!f1res){
+            callback(linkObj);
+            return;
+        }
         let f1 = f1res[0];
+        
         db.collection('filtered_flights_'+ collectionUuid).find({_id:link.start}, (err,f2res) =>{
+            if(!f2res){
+                callback(linkObj);
+                return;
+            }
             let f2 = f2res[0];
             for(let i=0; i< link.ts.length; i++){
                 let f1pos = utils.getPositionAtMoment(f1,link.ts[i])

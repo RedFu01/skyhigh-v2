@@ -165,3 +165,19 @@ The heart piece of the application is the `compute/handleOrder.js` file. It anal
 ### Export
 
 In the `tools` folder is a variety of scripts which can be used to generate JSON files from an order which can be interpreted further interpreted by matlab scripts in the `matlab` folder. Those export scripts are not configurable by commanline arguments. The needed collection an output files have to be added in code. 
+
+
+### Usefull commands
+
+In several occasions it is necessary to inspect whats in the database:
+
+```
+> mongo
+> use skyhigh
+> db.getCollectionNames() // <- lists all the collections
+> db['collectionName'].find()[0] // <- show the first element of a collection, useful to inspect the structure of the collection
+
+```
+
+To use any of the export tools navigate in the `skyhigh` folder and execute a script like `root@orion6:/home/skyhigh-v2# node --use_strict --harmony --max-old-space-size=30000 ./tools/exportLinkDetails.js`, the collection which will be exported needs to be adjusted in the code.
+

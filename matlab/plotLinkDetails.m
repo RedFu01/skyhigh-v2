@@ -1,18 +1,7 @@
-%clear;
-%figure;
-%hold on;
-
-%
-%fname = strcat('resources/linkDetails_001.json');
-%fid = fopen(fname);
-%raw = fread(fid,inf);
-%str = char(raw');
-%fclose(fid);
-
-%data = JSON.parse(str);
+uuid = '05/11/2016_600km_d762aec4-22e5-438b-8aec-c1f06cff8246';
+data = webread('http://orion6:3000/export/', 'uuid',uuid,weboptions('Timeout',360));
 
 for i=1:1:length(data)
-    if(~isempty(data{i}.start))
-        data{i}.start{1}
-    end
+   currentLink = data(i); 
+    
 end

@@ -10,11 +10,11 @@ let fs = require('fs')
 let mkdirp = require('mkdirp');
 
 let links = {};
-
+let linkArray = []
 let c =0;
 let deltaT = 100;
 
-const collectionUuid = "05/11/2016_600km_f217f1b3-2e89-4a7b-a219-ae5fff30acbf";
+const collectionUuid = "05/11/2016_600km_d762aec4-22e5-438b-8aec-c1f06cff8246";
 
 db.collection("network-"+collectionUuid).find((err, res) => {
     for(let i=1; i< res.length; i++){
@@ -22,7 +22,7 @@ db.collection("network-"+collectionUuid).find((err, res) => {
             for(let j=0; j< res[i].aircraft[ac].length; j++){
                 let linkHash = hash([ac, res[i].aircraft[ac][j]].join(''))
                 //console.log([ac, res[i].aircraft[ac][j]])
-                //console.log(linkHash)
+                console.log(linkHash)
                 if(links[linkHash]){
                     links[linkHash].duration +=deltaT;
                     links[linkHash].ts.push(res[i]._id);
@@ -39,28 +39,36 @@ db.collection("network-"+collectionUuid).find((err, res) => {
             }
         }
     }
-    let linkArray = []
     for(let key in links){
         linkArray.push(links[key])
     }
-    for(let k=0; k< linkArray.length; k++){
-        handleLink(linkArray[k], (linkObj)=>{
-            doneCount ++;
-            finalLinkResults.push(linkObj)
-            //console.log(linkObj)
-            if(finalLinkResults.length == linkArray.length){
-                fs.writeFile('./export/linkDetails_002.json' , JSON.stringify(finalLinkResults), function (err) {
-                    if(err)
-                    console.log(err)
-                    console.log('Passout')
-                });
-            }
-        })
-    }
+    //for(let k=0; k< linkArray.length; k++){
+        handleLink(linkArray[doneCount], linkCallback)
+    //}
 })
 
 var doneCount =0;
 var finalLinkResults = [];
+
+function linkCallback(linkObj){
+    linkObj._id = linkObj.hash;
+    db.collection('linkExport_'+collectionUuid).insert({linkObj}, (err, res)=>{
+            
+        doneCount++;
+        console.log('Done: ' + doneCount + ' of ' + linkArray.length);
+        if(doneCount == linkArray.length){
+            console.log('Fertig')
+            // fs.writeFile('./export/linkDetails_004.json' , JSON.stringify(finalLinkResults), function (err) {
+            //     if(err)
+            //     console.log(err)
+            //     console.log('Passout')
+            // });
+        }else{
+            handleLink(linkArray[doneCount], linkCallback)
+        }
+
+    });
+}
 
 
 function handleLink(link, callback){

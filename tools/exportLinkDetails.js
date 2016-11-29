@@ -80,7 +80,7 @@ function handleLink(link, callback){
         }
         let f1 = f1res[0];
         
-        db.collection('filtered_flights_'+ collectionUuid).find({_id:link.start}, (err,f2res) =>{
+        db.collection('filtered_flights_'+ collectionUuid).find({_id:link.end}, (err,f2res) =>{
             if(!f2res){
                 callback(linkObj);
                 return;

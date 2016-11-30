@@ -13,21 +13,50 @@ function recursiveStringify(res){
 }
 
 /* GET users listing. */
-router.get('/:uuid', function(request, response, next) {
-  var uuid = request.params.uuid;
-  db.collection('linkExport_'+uuid).find({}, (err, res) =>{
-    bfj.stringify(res).then(str => {
-      response.json(str)
-    })
-  })
-});
+// router.get('/:uuid', function(request, response, next) {
+//   var uuid = request.params.uuid;
+//   db.collection('linkExport_'+uuid).find({}, (err, res) =>{
+//     bfj.stringify(res).then(str => {
+//       response.json(str)
+//     })
+//   })
+// });
+router.get('/chunk', function(request, response, next){
+  var uuid = request.query.uuid;
+  var startIndex = parseInt(request.query.start || 0);
+  db.collection('linkExport_'+uuid).find({}).limit(1000).skip(startIndex, (err, res) =>{
+      console.log('got everything')
+      response.setHeader('Content-Type', 'application/json');
+      response.write('[');
+      res.map((entry, index)=>{
+        delete entry.linkObj.ts;
+        response.write(JSON.stringify(entry.linkObj))
+        if(index != res.length-1){
+          response.write(',')
+        }
+      })
+      response.write(']');
+      response.end();
+      
+      //response.json(res);
+      //response.json({err,res})
+      })
+})
+
 router.get('/', function(request, response, next) {
   var uuid = request.query.uuid;
   try{
     db.collection('linkExport_'+uuid).find({}, (err, res) =>{
       console.log('got everything')
+      response.setHeader('Content-Type', 'application/json');
       response.write('[');
-      res.map(entry=>response.write(JSON.stringify(entry)))
+      res.map((entry, index)=>{
+        delete entry.linkObj.ts;
+        response.write(JSON.stringify(entry))
+        if(index != res.length-1){
+          response.write(',')
+        }
+      })
       response.write(']');
       response.end();
       //response.json(recursiveStringify(res));

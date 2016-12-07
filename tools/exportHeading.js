@@ -15,10 +15,21 @@ let c =0;
 let deltaT = 100;
 
 const collectionUuid = "05/11/2016_600km_11e3ab6c-0362-43ab-ab48-ddd7427443ff";
+let count =0;
+let result=[];
 
-db.collection('flights-2014-06-01').find({},(err, res)=>{
-    console.log(res.length);
-    let result = res.map((flight)=>{
+function handleFlight(){
+db.collection('flights-2014-06-01').skip(count).limit(1).find({},(err, res)=>{
+    if(res.length ==0){
+        console.log('Writing')
+        fs.writeFile('./export/raw_avg_headings.json' , JSON.stringify(result), function (err) {
+            if(err)
+            console.log(err)
+            console.log('Passout')
+        }); 
+        return;
+    }
+    let tmp = res.map((flight)=>{
         let avg = 0;
         for(let i=0; i < flight.path.length; i++){
             avg += (flight.path[i].track || 0)
@@ -26,10 +37,11 @@ db.collection('flights-2014-06-01').find({},(err, res)=>{
         console.log(avg)
         return avg/flight.path.length;
     })
-    fs.writeFile('./export/raw_avg_headings.json' , JSON.stringify(result), function (err) {
-        if(err)
-        console.log(err)
-        console.log('Passout')
-    }); 
+    result.push(tmp)
+    count++;
+    console.log('Did: ' + count);
+    handleFlight();
 })
+}
+handleFlight();
 

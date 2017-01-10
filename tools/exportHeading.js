@@ -19,7 +19,7 @@ let count =0;
 let result=[];
 
 function handleFlight(){
-db.collection('flights-2014-06-01').skip(count).limit(1).find({},(err, res)=>{
+db.collection('filtered_flights_05/11/2016_600km_c765cdbe-7a02-433d-b6ca-eb09b0c0f2f8').find({}).skip(count).limit(1,(err, res)=>{
     if(res.length ==0){
         console.log('Writing')
         fs.writeFile('./export/raw_avg_headings.json' , JSON.stringify(result), function (err) {

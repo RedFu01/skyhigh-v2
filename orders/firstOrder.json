@@ -5,9 +5,9 @@
             "type":"FILTER_FLIGHTS",
             "filters":{
                 "region":{
-                    "minLat": 45,
-                    "maxLat": 55,
-                    "minLng": -55,
+                    "minLat": 10,
+                    "maxLat": 65,
+                    "minLng": -75,
                     "maxLng": -8
                 },
                 "startTime": 1401580800,

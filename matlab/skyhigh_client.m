@@ -1,6 +1,6 @@
 clear all;
 %config
-baseUrl = 'http://localhost:3000/raw/flights';
+baseUrl = 'http://localhost:3000/raw/flights'; %for use at comNets: http://orion6:3000/raw/flights
 statusUrl = strcat(baseUrl, '/status');
 chunkUrl = strcat(baseUrl, '/chunk');
 progress = 0;

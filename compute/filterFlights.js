@@ -58,7 +58,9 @@ function filterFlights(uuid, currentStep, lastStepData, callback){
                             if(finishedFlights == tmpFlights.length){
                                 flights = flights.filter((flight)=>{
                                     let distance = utils.getFlightDistance(flight);
-                                    let duration = utils.getFlightDuration(flight)
+                                    let duration = utils.getFlightDuration(flight);
+                                    let heading = utils.getFlightHeading(flight);
+                                    console.log(heading);
                                     if(minDistance && distance < minDistance){
                                         return false;
                                     }
@@ -69,6 +71,12 @@ function filterFlights(uuid, currentStep, lastStepData, callback){
                                         return false;
                                     }
                                     if(maxDuration && duration > maxDuration){
+                                        return false;
+                                    }
+                                    if(heading && heading <= overallMinHeading){
+                                        return false;
+                                    }
+                                    if(heading && heading >= overallMaxHeading){
                                         return false;
                                     }
 

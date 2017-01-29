@@ -47,6 +47,14 @@ function getFlightDistance(flight){ // in meters
     return getDistanceFromLatLonInKm(startPoint[0], startPoint[1], endPoint[0], endPoint[1])*1000;
 }
 
+function getFlightHeading(flight){
+    let avg = 0;
+        for(let i=0; i < flight.path.length; i++){
+            avg += (flight.path[i].track || 0)
+        }
+    return avg/flight.path.length;
+}
+
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     let R = 6371; // Radius of the earth in km
 	let dLat = deg2rad(lat2-lat1);  // deg2rad below
@@ -202,5 +210,6 @@ module.exports = {
     getFullFlight,
     getTimeArray,
     getPositionAtMoment,
-    getDistanceFromLatLonInKm
+    getDistanceFromLatLonInKm,
+    getFlightHeading
 }

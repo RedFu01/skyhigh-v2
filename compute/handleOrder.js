@@ -11,7 +11,7 @@ var computeNetworkStats = require('./computeNetworkStats');
 var usePathes = require('./usePathes');
 
 function handleOrder(order, orderEndCallback){
-    order.uuid = '05/11/2016_'+ (order.radius || '') + '_' + node_uuid.v4();
+    order.uuid = (order.radius + '_'|| '') + node_uuid.v4();
     order.ts = new Date();
     order.currentStepIndex = 0;
     order.finished = false;
@@ -31,6 +31,7 @@ function handleOrder(order, orderEndCallback){
             }
         }
     })
+    return order.uuid;
 }
 
 function handleSteps(order, data, callback){

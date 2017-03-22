@@ -16,6 +16,7 @@ overallMinHeading   = 0;                % in degree
 overallMaxHeading   = 100;              % in degree
 startTime           = 1401580800;       % Unix timestamp
 endTime             = 1401667200;       % Unix timestamp
+deltaT              = 10;               % time interval for interpolation in seconds (defaults to 10)
 
 
 %initial request - starts server calculation and stores query-uuid
@@ -46,7 +47,7 @@ flightData = cres;
 
 while ~isempty(cres)
     index = index + 200;
-    cres = webread(chunkUrl, 'uuid', uuid, 'start', index, getOptions);
+    cres = webread(chunkUrl, 'deltat', deltaT, 'uuid', uuid, 'start', index, getOptions);
     flightData = cat(1, flightData,cres);
     msg = strcat('Loaded:',{' '},num2str(length(flightData)));
     disp(msg{1});

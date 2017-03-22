@@ -74,7 +74,7 @@ router.get('/flights/chunk', function (request, response, next) {
             res.map((entry, index) => {
                 let f = Object.assign({}, entry);
                 f.path = [];
-                for (let i = entry.depatureTime; i < entry.arrivalTime; i += 10) {
+                for (let i = entry.depatureTime; i < entry.arrivalTime; i += (request.query.deltat || 10)) {
                     f.path.push(utils.getPositionAtMoment(entry, i));
                 }
                 response.write(JSON.stringify(f))

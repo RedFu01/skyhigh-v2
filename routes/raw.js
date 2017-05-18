@@ -36,6 +36,8 @@ router.post('/flights/', function (req, res, next) {
                 "maxDistance": query.maxDistance,
                 "overallMinHeading": query.overallMinHeading,
                 "overallMaxHeading": query.overallMaxHeading,
+                "minAltitude": query.minAltitude,
+                "maxAltitude":  query.maxAltitude
             }
         }
         ]

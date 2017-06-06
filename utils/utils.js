@@ -155,12 +155,12 @@ function getPositionAtMoment(flight, moment) {
     var pos = null;
     var index = 0;
     if (!flight) {
-        console.log('no Flight')
+        //console.log('no Flight')
         return null;
     }
 
     if (flight.depatureTime > moment || flight.arrivalTime < moment) {
-        console.log('out of timebounds')
+        //console.log('out of timebounds')
         return null;
     }
 
@@ -168,7 +168,7 @@ function getPositionAtMoment(flight, moment) {
         index++;
     }
     if (!flight.path[index] || !flight.path[index - 1]) {
-        console.log('out of timebounds_2')
+        //console.log('out of timebounds_2')
         return null;
     }
     var prevPos = {
@@ -220,5 +220,6 @@ module.exports = {
     getTimeArray,
     getPositionAtMoment,
     getDistanceFromLatLonInKm,
-    getFlightHeading
+    getFlightHeading,
+    getMedianHeight
 }

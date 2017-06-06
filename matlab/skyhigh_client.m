@@ -16,13 +16,13 @@ overallMinHeading   = 0;                % in degree
 overallMaxHeading   = 100;              % in degree
 startTime           = 1401580800;       % Unix timestamp
 endTime             = 1401667200;       % Unix timestamp
-minAltitude         = 0                 % in meters
-maxAltitude         = 100000000000      % in meters
-deltaT              = 1000;               % time interval for interpolation in seconds (defaults to 10)
+minAltitude         = 0         ;       % in meters
+maxAltitude         = 100;     % in meters
+deltaT              = 1000;             % time interval for interpolation in seconds (defaults to 10)
 
 
 %initial request - starts server calculation and stores query-uuid
-query = struct('endTime', endTime, 'startTime', startTime, 'minLat', minLat, 'maxLat', maxLat, 'minLng', minLng, 'maxLng', maxLng, 'minDuration', minDuration, 'overallMinHeading', overallMinHeading, 'overallMaxHeading', overallMaxHeading);
+query = struct('endTime', endTime, 'startTime', startTime, 'minLat', minLat, 'maxLat', maxLat, 'minLng', minLng, 'maxLng', maxLng, 'minDuration', minDuration, 'overallMinHeading', overallMinHeading, 'overallMaxHeading', overallMaxHeading, 'minAltitude', minAltitude, 'maxAltitude', maxAltitude);
 data = struct('api_key', 'A');
 postOptions = weboptions('MediaType', 'application/json', 'Timeout', 3600000);
 getOptions = weboptions('Timeout', 3600000);

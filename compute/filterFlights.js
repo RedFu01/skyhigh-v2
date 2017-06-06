@@ -57,13 +57,13 @@ function filterFlights(uuid, currentStep, lastStepData, callback){
                                 flights.push(flight)
                             }
                             finishedFlights ++;
+                            console.log('processed '+finishedFlights+' of ' + tmpFlights.length)
                             if(finishedFlights == tmpFlights.length){
                                 flights = flights.filter((flight)=>{
                                     let distance = utils.getFlightDistance(flight);
                                     let duration = utils.getFlightDuration(flight);
                                     let heading = utils.getFlightHeading(flight);
                                     let altitude = utils.getMedianHeight(flight)
-                                    console.log(heading);
 
                                     if(minAltitude && altitude < minAltitude){
                                         return false;
@@ -83,10 +83,10 @@ function filterFlights(uuid, currentStep, lastStepData, callback){
                                     if(maxDuration && duration > maxDuration){
                                         return false;
                                     }
-                                    if(heading && heading <= overallMinHeading){
+                                    if(overallMinHeading && heading <= overallMinHeading){
                                         return false;
                                     }
-                                    if(heading && heading >= overallMaxHeading){
+                                    if(overallMaxHeading && heading >= overallMaxHeading){
                                         return false;
                                     }
 

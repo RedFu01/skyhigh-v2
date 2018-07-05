@@ -2,7 +2,7 @@
 let utils = require('../utils/utils');
 let mongojs = require('mongojs');
 let Terraformer = require('terraformer');
-let db = mongojs('skyhigh');
+let db = mongojs('skyhigh', [], {connectTimeoutMS: 1000*60*20, socketTimeoutMS: 1000*60*20})
 let uuid = require('node-uuid');
 let ObjectId = db.ObjectId;
 let hash = require('js-md5');

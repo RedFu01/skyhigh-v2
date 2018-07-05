@@ -2,7 +2,7 @@
 let utils = require('../utils/utils');
 let mongojs = require('mongojs');
 let Terraformer = require('terraformer');
-let db = mongojs('skyhigh');
+let db = mongojs('skyhigh', [], {connectTimeoutMS: 1000*60*20, socketTimeoutMS: 1000*60*20})
 let uuid = require('node-uuid');
 let ObjectId = db.ObjectId;
 
@@ -15,7 +15,8 @@ function computeNetwork(uuid, currentStep, lastStepData, callback) {
         deltaT,
         A2G_Radius,
         A2A_Radius,
-        IGWs
+        IGWs,
+        region
     } = currentStep.properties
 
     let timestamps = utils.getTimeArray(startTime, endTime, deltaT);
@@ -30,7 +31,16 @@ function computeNetwork(uuid, currentStep, lastStepData, callback) {
             }
             let positionMap = {};
             for (let j = 0; j < flights.length; j++) {
-                positionMap[flights[j]._id] = utils.getPositionAtMoment(flights[j], timestamps[i])
+                let currentPosition = utils.getPositionAtMoment(flights[j], timestamps[i])
+                if(region){
+                    if(utils.isInBounds(currentPosition, region)){
+                        positionMap[flights[j]._id] = currentPosition;
+                    }else{
+                        console.log('not in region of interest');
+                    }
+                }else{
+                    positionMap[flights[j]._id] = currentPosition;
+                }
             }
             for (let id_1 in positionMap) {
                 let f1_pos = positionMap[id_1];

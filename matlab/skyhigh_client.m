@@ -17,7 +17,7 @@ overallMaxHeading   = 100;              % in degree
 startTime           = 1401580800;       % Unix timestamp
 endTime             = 1401667200;       % Unix timestamp
 minAltitude         = 0         ;       % in meters
-maxAltitude         = 100;     % in meters
+maxAltitude         = 100;              % in meters
 deltaT              = 1000;             % time interval for interpolation in seconds (defaults to 10)
 
 
@@ -29,7 +29,7 @@ getOptions = weboptions('Timeout', 3600000);
 response = webwrite(baseUrl, query, postOptions);
 
 uuid = response.uuid;
-
+uuid = '600km_3b59def3-d9b4-4dc1-a05a-f08281a944ce'
 %periodically ask the server for the status of the executed query
 while(progress < 1)
     data = struct('uuid', uuid);

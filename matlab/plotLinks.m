@@ -14,9 +14,9 @@ for i=1:1:length(data)
 end
 
 figure;
-histogram(duration,200)
-title(strcat('Link duration Scenario 2 | ',{''},conRadius,{''},' km'));
+histogram(duration,100)
+title(strcat('Link duration Scenario 14 | ',{' '},conRadius,{' '},'km'));
 xlabel('Link duration [s]')
 ylabel('Occurrence')
-savefig(strcat('figures/linkDuration', conRadius));
+savefig(strcat('figures/linkDuration_mock_scenario14'));
 

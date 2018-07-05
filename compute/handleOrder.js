@@ -1,6 +1,6 @@
 "use strict";
 var mongojs = require('mongojs');
-var db = mongojs('skyhigh');
+let db = mongojs('skyhigh', [], {connectTimeoutMS: 1000*60*20, socketTimeoutMS: 1000*60*20})
 var node_uuid = require('node-uuid');
 
 var filterFlights = require('./filterFlights');

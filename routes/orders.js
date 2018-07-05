@@ -52,6 +52,12 @@ router.post('/', function(req, res, next) {
         },{
             type:'COMPUTE_NETWORK',
             properties:{
+                region:{
+                    minLat: 10,
+                    maxLat: 65,
+                    minLng: -75,
+                    maxLng: -8
+                },
                 startTime: 1401580800,
                 endTime: 1401580800 + 60*60*24,
                 deltaT: 100,

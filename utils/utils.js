@@ -2,7 +2,7 @@
 let moment = require('moment');
 let Terraformer = require('terraformer')
 var mongojs = require('mongojs');
-let db = mongojs('skyhigh');
+let db = mongojs('skyhigh', [], {connectTimeoutMS: 1000*60*20, socketTimeoutMS: 1000*60*20})
 let uuid = require('node-uuid');
 let ObjectId = db.ObjectId;
 
@@ -211,7 +211,17 @@ function getTimeArray(startTime, endTime, deltaT) {
     return tArray;
 }
 
+function isInBounds(position, bounds) {
+    if(!position || !bounds){
+        return false;
+    }
+    let { lat, lng } = position;
+    let { minLat, maxLat, minLng, maxLng } = bounds;
+    return lat && lng && lat <= maxLat && lat >= minLat && lng <= maxLng && lng >= minLng;
+}
+
 module.exports = {
+    isInBounds,
     getCollectionArray,
     bounds2GeoJSON,
     getFlightDuration,
